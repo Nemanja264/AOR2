@@ -1,0 +1,33 @@
+-- AND
+library IEEE;
+use IEEE.std_logic_1164.all;
+use IEEE.numeric_std.all ;
+
+entity andGate is
+port(a, b: in std_logic;
+	y: out std_logic;);
+end entity;
+
+architecture a_and of andGate is
+begin
+
+y <= a and b;
+
+end architecture;
+
+-- OR
+library IEEE;
+use IEEE.std_logic_1164.all;
+use IEEE.numeric_std.all ;
+
+entity orGate is
+port(a, b: in std_logic;
+	y: out std_logic;);
+end entity;
+
+architecture a_or of orGate is
+begin
+
+y <= a or b;
+
+end architecture;
