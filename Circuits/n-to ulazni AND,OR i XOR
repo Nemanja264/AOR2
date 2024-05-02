@@ -1,0 +1,79 @@
+-- AND
+library IEEE;
+use IEEE.std_logic_1164.all;
+use IEEE.numeric_std.all ;
+
+entity andGate is
+generic(n: integer := 2);
+port(a: in std_logic_vector(n-1 downto 0);
+	y: out std_logic;);
+end entity;
+
+architecture a_and of andGate is
+begin
+
+process(a) is
+	variable ny: std_logic;
+begin
+ny := a(0);
+	for i in 1 to (n-1) loop
+		ny := ny and a(i);
+	end loop;
+y <= ny;
+end process;
+
+end architecture;
+
+-- OR
+library IEEE;
+use IEEE.std_logic_1164.all;
+use IEEE.numeric_std.all ;
+
+entity orGate is
+generic(n: integer := 2);
+port(a: in std_logic_vector(n-1 downto 0);
+	y: out std_logic;);
+end entity;
+
+architecture a_or of orGate is
+begin
+
+process(a) is
+	variable ny: std_logic;
+begin
+ny := a(0);
+	for i in 1 to (n-1) loop
+		ny := ny or a(i);
+	end loop;
+y <= ny;
+end process;
+
+end architecture;
+
+-- XOR
+library IEEE;
+use IEEE.std_logic_1164.all;
+use IEEE.numeric_std.all ;
+
+entity xorGate is
+generic(n: integer := 2);
+port(a: in std_logic_vector(n-1 downto 0);
+	y: out std_logic;);
+end entity;
+
+architecture a_xor of xorGate is
+begin
+
+process(a) is
+	variable ny: std_logic;
+begin
+ny := a(0);
+	for i in 1 to (n-1) loop
+		ny := ny xor a(i);
+	end loop;
+y <= ny;
+end process;
+
+end architecture;
+
+
