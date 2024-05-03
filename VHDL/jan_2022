@@ -6,7 +6,7 @@ use IEEE.numeric_std.all ;
 entity kolo is
 generic(n: integer := 4;);
 port(a,clk: std_logic;
-	b,c: in std_logic_vector(1 downto 0);
+	b,c: in std_logic_vector(n-1 downto 0);
 	f: out std_logic_vector(n-1 downto 0););
 end entity;
 
