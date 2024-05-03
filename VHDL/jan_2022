@@ -24,7 +24,7 @@ begin
               port map(f(i-1),b,c,f(i));
           end generate;
         end generate;
-    
+    end generate;
 end architecture;
 
 library IEEE;
