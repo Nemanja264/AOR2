@@ -1,0 +1,116 @@
+-- OR
+
+library IEEE;
+use IEEE.std_logic_1164.all;
+use IEEE.numeric_std.all ;
+
+entity orGate is
+port (a,b: in std_logic;
+	c: out std_logic);
+end entity;
+
+architecture a_or of orGate is
+begin
+c <= a or b;
+end architecture;
+
+----------------------
+-- XOR
+
+library IEEE;
+use IEEE.std_logic_1164.all;
+use IEEE.numeric_std.all ;
+
+entity xorGate is
+port (a,b: in std_logic;
+	c: out std_logic);
+end entity;
+
+architecture a_xor of xorGate is
+begin
+c <= a xor b;
+end architecture;
+---------------------------------
+-- GLAVNO KOLO
+
+library IEEE;
+use IEEE.std_logic_1164.all;
+use IEEE.numeric_std.all ;
+
+entity kolo is
+generic(n: integer := 4);
+port(clk,c: in std_logic;
+	a,b: in std_logic_vector(n-1 downto 0);
+    dout: out std_logic_vector(n-1 downto 0));
+end entity;
+
+architecture a_kolo of kolo is
+signal stanje: std_logic_vector(n-1 downto 0);
+begin
+
+generisi: for i in 0 to n-1 generate
+signal yxor: std_logic;
+begin
+	uslov: if i = 0 generate
+    	prvoXor: entity work.xorGate(a_xor)
+        	port map(a(i),b(i),yxor);
+        prvo: entity work.orGate(a_or)
+        	port map(c,yxor,stanje(i));
+    else generate
+    	ostaloXor: entity work.xorGate(a_xor)
+        	port map(a(i),b(i),yxor);
+        ostalo: entity work.orGate(a_or)
+        	port map(stanje(i-1),yxor,stanje(i));
+    end generate;
+end generate;
+
+clock: process(clk)
+begin
+dout <= stanje;
+end process;
+
+end architecture;
+---------------------------------------
+-- TESTBENCH
+
+library IEEE ;
+  use IEEE.std_logic_1164.all ;
+  use IEEE.numeric_std.all ;
+
+entity tb is
+generic(n:integer := 4);
+end tb;
+
+architecture a_tb of tb is
+  signal dout,a,b : std_logic_vector(n-1 downto 0);
+  signal clk,c: std_logic;
+begin
+
+dut4: entity work.kolo(a_kolo)
+  generic map(n)
+  port map(clk,c,a,b,dout);
+
+	process
+    begin
+    	clk <= '1'; wait for 5ns;
+        clk <= '0'; wait for 5ns;
+    end process;
+    
+  stimuli : process
+  begin
+	c <= '0';
+    a <= "0100";
+    b <= "1100";
+	wait for 5ns;
+    c <= '0';
+    a <= "0100";
+    b <= "1110";
+	wait for 5ns;
+    c <= '1';
+    a <= "0100";
+    b <= "1100";
+	wait for 5ns;
+   wait;
+  end process stimuli;
+
+end architecture;
