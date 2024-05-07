@@ -95,7 +95,7 @@ begin
   begin
 	num1 <= "1000001011";
     num2 <= "0000001011";
-	wait for 20ns; PAR = '0' , DOUT = "10110"
+	wait for 20ns; -- PAR = '0' , DOUT = "10110"
    	num1 <= "0000001111";
     num2 <= "1000001011";
 	wait for 20ns; -- PAR = '1' , DOUT = "11010"
